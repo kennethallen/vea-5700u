@@ -6,4 +6,7 @@ Meeting - Thursday 31 March
 * Huoth and Michael bringing in DES, looking for code for RSA and DH
 * Brandon to start coding VEA
 
-ADDED NOTE 040716
+Meeting - Thursday 7 April
+* Sketched out GUI concept
+* Compared notes on project requirements
+* Demonstrated Git and GitHub
