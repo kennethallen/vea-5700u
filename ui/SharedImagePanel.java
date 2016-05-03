@@ -1,5 +1,7 @@
 package hvcs.ui;
 
+import hvcs.Client;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
@@ -15,12 +17,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 class SharedImagePanel extends JPanel {
 
-    public static final int MAX_COORDS = 5;
     public static final Color COORD_HIGHLIGHT_COLOR = Color.yellow;
 
     final BufferedImage image;
     final Dimension imageDim;
-    private final ArrayList<Point> coords = new ArrayList<>(MAX_COORDS);
+    private final ArrayList<Point> coords = new ArrayList<>(Client.MAX_COORDS);
 
     final JPanel canvas;
     final JLabel statusLbl = new JLabel();
@@ -42,7 +43,7 @@ class SharedImagePanel extends JPanel {
                 coords.clear();
 
                 final Random rand = ThreadLocalRandom.current();
-                while (coords.size() < MAX_COORDS) {
+                while (coords.size() < Client.MAX_COORDS) {
                     coords.add(new Point(
                             rand.nextInt(imageDim.width),
                             rand.nextInt(imageDim.height)));
@@ -62,7 +63,7 @@ class SharedImagePanel extends JPanel {
                 addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(final MouseEvent e) {
-                        if (coords.size() >= MAX_COORDS) {
+                        if (coords.size() >= Client.MAX_COORDS) {
                             coords.remove(0);
                         }
                         coords.add(new Point(e.getX(), e.getY()));
@@ -117,7 +118,7 @@ class SharedImagePanel extends JPanel {
         canvas.repaint();
 
         final StringBuilder sb = new StringBuilder("<html><body><strong>");
-        sb.append(coords.size()).append('/').append(MAX_COORDS).append(" coordinate");
+        sb.append(coords.size()).append('/').append(Client.MAX_COORDS).append(" coordinate");
         if (coords.size() != 1) {
             sb.append('s');
         }

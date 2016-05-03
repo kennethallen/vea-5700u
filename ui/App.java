@@ -1,7 +1,9 @@
 package hvcs.ui;
 
+import hvcs.net.SimNetwork;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import static javax.swing.UIManager.*;
@@ -14,18 +16,21 @@ public class App {
     public static void main(final String[] args) {
         initLookAndFeel();
 
-        final JFrame frame = new JFrame("Encrypted Image Transfer Client - Group 2");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        final NetFrame net = new NetFrame(new SimNetwork());
+        net.setLocationRelativeTo(null);
+        net.setVisible(true);
+    }
 
-        try {
-            frame.setContentPane(new ClientPanel(
-                    ImageIO.read(App.class.getResource("/hvcs/ui/shared-secret.png"))));
-        } catch (final IOException e) {
-            e.printStackTrace();
+    private static BufferedImage sharedSecret;
+    static synchronized BufferedImage sharedSecret() {
+        if (sharedSecret == null) {
+            try {
+                sharedSecret = ImageIO.read(App.class.getResource("/hvcs/ui/shared-secret.png"));
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
         }
-
-        frame.pack();
-        frame.setVisible(true);
+        return sharedSecret;
     }
 
     /**

@@ -1,7 +1,7 @@
 package hvcs;
 
-import java.util.*;
 import java.math.BigInteger;
+import java.util.Scanner;
 
 public class DH {
 	

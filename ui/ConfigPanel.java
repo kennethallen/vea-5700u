@@ -40,8 +40,7 @@ class ConfigPanel extends JPanel {
         desRdio.setSelected(true);
         des.actionPerformed(null);
 
-        veaRoundsSldr.setMajorTickSpacing(2);
-        veaRoundsSldr.setMinorTickSpacing(1);
+        veaRoundsSldr.setMajorTickSpacing(1);
         veaRoundsSldr.setPaintLabels(true);
 
         new GroupLytExpress(this) {
