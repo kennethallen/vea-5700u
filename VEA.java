@@ -1,8 +1,10 @@
+
 public class VEA {
 
-    static String key = "7fffffffffffffff7a8b9c0d1e2f3a4b"; //128 bits   
+    static String key = "7fffffffffffffff7a8b9c0d1e2f3a4b";  
+    static String IV = "0000000000000000000000000000000000000000000000000000000000000000";
 
-    //576 bits 
+    
     static String[] p = {
         "243f6a88", "85a308d3", "13198a2e",
         "03707344", "a4093822", "299f31d0",
@@ -11,276 +13,312 @@ public class VEA {
         "9ec65b9d", "b31d42a7", "cec064fa",
         "0e398d47", "9acab707", "be150a28"
     };
-    static String[] pPost = new String[18];
 
-    static int pLen = p.length;
     static String[] s1 = {
-        "0xD1310BA6L", "0x98DFB5ACL", "0x2FFD72DBL", "0xD01ADFB7L",
-        "0xB8E1AFEDL", "0x6A267E96L", "0xBA7C9045L", "0xF12C7F99L",
-        "0x24A19947L", "0xB3916CF7L", "0x0801F2E2L", "0x858EFC16L",
-        "0x636920D8L", "0x71574E69L", "0xA458FEA3L", "0xF4933D7EL",
-        "0x0D95748FL", "0x728EB658L", "0x718BCD58L", "0x82154AEEL",
-        "0x7B54A41DL", "0xC25A59B5L", "0x9C30D539L", "0x2AF26013L",
-        "0xC5D1B023L", "0x286085F0L", "0xCA417918L", "0xB8DB38EFL",
-        "0x8E79DCB0L", "0x603A180EL", "0x6C9E0E8BL", "0xB01E8A3EL",
-        "0xD71577C1L", "0xBD314B27L", "0x78AF2FDAL", "0x55605C60L",
-        "0xE65525F3L", "0xAA55AB94L", "0x57489862L", "0x63E81440L",
-        "0x55CA396AL", "0x2AAB10B6L", "0xB4CC5C34L", "0x1141E8CEL",
-        "0xA15486AFL", "0x7C72E993L", "0xB3EE1411L", "0x636FBC2AL",
-        "0x2BA9C55DL", "0x741831F6L", "0xCE5C3E16L", "0x9B87931EL",
-        "0xAFD6BA33L", "0x6C24CF5CL", "0x7A325381L", "0x28958677L",
-        "0x3B8F4898L", "0x6B4BB9AFL", "0xC4BFE81BL", "0x66282193L",
-        "0x61D809CCL", "0xFB21A991L", "0x487CAC60L", "0x5DEC8032L",
-        "0xEF845D5DL", "0xE98575B1L", "0xDC262302L", "0xEB651B88L",
-        "0x23893E81L", "0xD396ACC5L", "0x0F6D6FF3L", "0x83F44239L",
-        "0x2E0B4482L", "0xA4842004L", "0x69C8F04AL", "0x9E1F9B5EL",
-        "0x21C66842L", "0xF6E96C9AL", "0x670C9C61L", "0xABD388F0L",
-        "0x6A51A0D2L", "0xD8542F68L", "0x960FA728L", "0xAB5133A3L",
-        "0x6EEF0B6CL", "0x137A3BE4L", "0xBA3BF050L", "0x7EFB2A98L",
-        "0xA1F1651DL", "0x39AF0176L", "0x66CA593EL", "0x82430E88L",
-        "0x8CEE8619L", "0x456F9FB4L", "0x7D84A5C3L", "0x3B8B5EBEL",
-        "0xE06F75D8L", "0x85C12073L", "0x401A449FL", "0x56C16AA6L",
-        "0x4ED3AA62L", "0x363F7706L", "0x1BFEDF72L", "0x429B023DL",
-        "0x37D0D724L", "0xD00A1248L", "0xDB0FEAD3L", "0x49F1C09BL",
-        "0x075372C9L", "0x80991B7BL", "0x25D479D8L", "0xF6E8DEF7L",
-        "0xE3FE501AL", "0xB6794C3BL", "0x976CE0BDL", "0x04C006BAL",
-        "0xC1A94FB6L", "0x409F60C4L", "0x5E5C9EC2L", "0x196A2463L",
-        "0x68FB6FAFL", "0x3E6C53B5L", "0x1339B2EBL", "0x3B52EC6FL",
-        "0x6DFC511FL", "0x9B30952CL", "0xCC814544L", "0xAF5EBD09L",
-        "0xBEE3D004L", "0xDE334AFDL", "0x660F2807L", "0x192E4BB3L",
-        "0xC0CBA857L", "0x45C8740FL", "0xD20B5F39L", "0xB9D3FBDBL",
-        "0x5579C0BDL", "0x1A60320AL", "0xD6A100C6L", "0x402C7279L",
-        "0x679F25FEL", "0xFB1FA3CCL", "0x8EA5E9F8L", "0xDB3222F8L",
-        "0x3C7516DFL", "0xFD616B15L", "0x2F501EC8L", "0xAD0552ABL",
-        "0x323DB5FAL", "0xFD238760L", "0x53317B48L", "0x3E00DF82L",
-        "0x9E5C57BBL", "0xCA6F8CA0L", "0x1A87562EL", "0xDF1769DBL",
-        "0xD542A8F6L", "0x287EFFC3L", "0xAC6732C6L", "0x8C4F5573L",
-        "0x695B27B0L", "0xBBCA58C8L", "0xE1FFA35DL", "0xB8F011A0L",
-        "0x10FA3D98L", "0xFD2183B8L", "0x4AFCB56CL", "0x2DD1D35BL",
-        "0x9A53E479L", "0xB6F84565L", "0xD28E49BCL", "0x4BFB9790L",
-        "0xE1DDF2DAL", "0xA4CB7E33L", "0x62FB1341L", "0xCEE4C6E8L",
-        "0xEF20CADAL", "0x36774C01L", "0xD07E9EFEL", "0x2BF11FB4L",
-        "0x95DBDA4DL", "0xAE909198L", "0xEAAD8E71L", "0x6B93D5A0L",
-        "0xD08ED1D0L", "0xAFC725E0L", "0x8E3C5B2FL", "0x8E7594B7L",
-        "0x8FF6E2FBL", "0xF2122B64L", "0x8888B812L", "0x900DF01CL",
-        "0x4FAD5EA0L", "0x688FC31CL", "0xD1CFF191L", "0xB3A8C1ADL",
-        "0x2F2F2218L", "0xBE0E1777L", "0xEA752DFEL", "0x8B021FA1L",
-        "0xE5A0CC0FL", "0xB56F74E8L", "0x18ACF3D6L", "0xCE89E299L",
-        "0xB4A84FE0L", "0xFD13E0B7L", "0x7CC43B81L", "0xD2ADA8D9L",
-        "0x165FA266L", "0x80957705L", "0x93CC7314L", "0x211A1477L",
-        "0xE6AD2065L", "0x77B5FA86L", "0xC75442F5L", "0xFB9D35CFL",
-        "0xEBCDAF0CL", "0x7B3E89A0L", "0xD6411BD3L", "0xAE1E7E49L",
-        "0x00250E2DL", "0x2071B35EL", "0x226800BBL", "0x57B8E0AFL",
-        "0x2464369BL", "0xF009B91EL", "0x5563911DL", "0x59DFA6AAL",
-        "0x78C14389L", "0xD95A537FL", "0x207D5BA2L", "0x02E5B9C5L",
-        "0x83260376L", "0x6295CFA9L", "0x11C81968L", "0x4E734A41L",
-        "0xB3472DCAL", "0x7B14A94AL", "0x1B510052L", "0x9A532915L",
-        "0xD60F573FL", "0xBC9BC6E4L", "0x2B60A476L", "0x81E67400L",
-        "0x08BA6FB5L", "0x571BE91FL", "0xF296EC6BL", "0x2A0DD915L",
-        "0xB6636521L", "0xE7B9F9B6L", "0xFF34052EL", "0xC5855664L",
-        "0x53B02D5DL", "0xA99F8FA1L", "0x08BA4799L", "0x6E85076AL"};
-
-    static String[] s2 = {
-        "0x4B7A70E9L", "0xB5B32944L", "0xDB75092EL", "0xC4192623L",
-        "0xAD6EA6B0L", "0x49A7DF7DL", "0x9CEE60B8L", "0x8FEDB266L",
-        "0xECAA8C71L", "0x699A17FFL", "0x5664526CL", "0xC2B19EE1L",
-        "0x193602A5L", "0x75094C29L", "0xA0591340L", "0xE4183A3EL",
-        "0x3F54989AL", "0x5B429D65L", "0x6B8FE4D6L", "0x99F73FD6L",
-        "0xA1D29C07L", "0xEFE830F5L", "0x4D2D38E6L", "0xF0255DC1L",
-        "0x4CDD2086L", "0x8470EB26L", "0x6382E9C6L", "0x021ECC5EL",
-        "0x09686B3FL", "0x3EBAEFC9L", "0x3C971814L", "0x6B6A70A1L",
-        "0x687F3584L", "0x52A0E286L", "0xB79C5305L", "0xAA500737L",
-        "0x3E07841CL", "0x7FDEAE5CL", "0x8E7D44ECL", "0x5716F2B8L",
-        "0xB03ADA37L", "0xF0500C0DL", "0xF01C1F04L", "0x0200B3FFL",
-        "0xAE0CF51AL", "0x3CB574B2L", "0x25837A58L", "0xDC0921BDL",
-        "0xD19113F9L", "0x7CA92FF6L", "0x94324773L", "0x22F54701L",
-        "0x3AE5E581L", "0x37C2DADCL", "0xC8B57634L", "0x9AF3DDA7L",
-        "0xA9446146L", "0x0FD0030EL", "0xECC8C73EL", "0xA4751E41L",
-        "0xE238CD99L", "0x3BEA0E2FL", "0x3280BBA1L", "0x183EB331L",
-        "0x4E548B38L", "0x4F6DB908L", "0x6F420D03L", "0xF60A04BFL",
-        "0x2CB81290L", "0x24977C79L", "0x5679B072L", "0xBCAF89AFL",
-        "0xDE9A771FL", "0xD9930810L", "0xB38BAE12L", "0xDCCF3F2EL",
-        "0x5512721FL", "0x2E6B7124L", "0x501ADDE6L", "0x9F84CD87L",
-        "0x7A584718L", "0x7408DA17L", "0xBC9F9ABCL", "0xE94B7D8CL",
-        "0xEC7AEC3AL", "0xDB851DFAL", "0x63094366L", "0xC464C3D2L",
-        "0xEF1C1847L", "0x3215D908L", "0xDD433B37L", "0x24C2BA16L",
-        "0x12A14D43L", "0x2A65C451L", "0x50940002L", "0x133AE4DDL",
-        "0x71DFF89EL", "0x10314E55L", "0x81AC77D6L", "0x5F11199BL",
-        "0x043556F1L", "0xD7A3C76BL", "0x3C11183BL", "0x5924A509L",
-        "0xF28FE6EDL", "0x97F1FBFAL", "0x9EBABF2CL", "0x1E153C6EL",
-        "0x86E34570L", "0xEAE96FB1L", "0x860E5E0AL", "0x5A3E2AB3L",
-        "0x771FE71CL", "0x4E3D06FAL", "0x2965DCB9L", "0x99E71D0FL",
-        "0x803E89D6L", "0x5266C825L", "0x2E4CC978L", "0x9C10B36AL",
-        "0xC6150EBAL", "0x94E2EA78L", "0xA5FC3C53L", "0x1E0A2DF4L",
-        "0xF2F74EA7L", "0x361D2B3DL", "0x1939260FL", "0x19C27960L",
-        "0x5223A708L", "0xF71312B6L", "0xEBADFE6EL", "0xEAC31F66L",
-        "0xE3BC4595L", "0xA67BC883L", "0xB17F37D1L", "0x018CFF28L",
-        "0xC332DDEFL", "0xBE6C5AA5L", "0x65582185L", "0x68AB9802L",
-        "0xEECEA50FL", "0xDB2F953BL", "0x2AEF7DADL", "0x5B6E2F84L",
-        "0x1521B628L", "0x29076170L", "0xECDD4775L", "0x619F1510L",
-        "0x13CCA830L", "0xEB61BD96L", "0x0334FE1EL", "0xAA0363CFL",
-        "0xB5735C90L", "0x4C70A239L", "0xD59E9E0BL", "0xCBAADE14L",
-        "0xEECC86BCL", "0x60622CA7L", "0x9CAB5CABL", "0xB2F3846EL",
-        "0x648B1EAFL", "0x19BDF0CAL", "0xA02369B9L", "0x655ABB50L",
-        "0x40685A32L", "0x3C2AB4B3L", "0x319EE9D5L", "0xC021B8F7L",
-        "0x9B540B19L", "0x875FA099L", "0x95F7997EL", "0x623D7DA8L",
-        "0xF837889AL", "0x97E32D77L", "0x11ED935FL", "0x16681281L",
-        "0x0E358829L", "0xC7E61FD6L", "0x96DEDFA1L", "0x7858BA99L",
-        "0x57F584A5L", "0x1B227263L", "0x9B83C3FFL", "0x1AC24696L",
-        "0xCDB30AEBL", "0x532E3054L", "0x8FD948E4L", "0x6DBC3128L",
-        "0x58EBF2EFL", "0x34C6FFEAL", "0xFE28ED61L", "0xEE7C3C73L",
-        "0x5D4A14D9L", "0xE864B7E3L", "0x42105D14L", "0x203E13E0L",
-        "0x45EEE2B6L", "0xA3AAABEAL", "0xDB6C4F15L", "0xFACB4FD0L",
-        "0xC742F442L", "0xEF6ABBB5L", "0x654F3B1DL", "0x41CD2105L",
-        "0xD81E799EL", "0x86854DC7L", "0xE44B476AL", "0x3D816250L",
-        "0xCF62A1F2L", "0x5B8D2646L", "0xFC8883A0L", "0xC1C7B6A3L",
-        "0x7F1524C3L", "0x69CB7492L", "0x47848A0BL", "0x5692B285L",
-        "0x095BBF00L", "0xAD19489DL", "0x1462B174L", "0x23820E00L",
-        "0x58428D2AL", "0x0C55F5EAL", "0x1DADF43EL", "0x233F7061L",
-        "0x3372F092L", "0x8D937E41L", "0xD65FECF1L", "0x6C223BDBL",
-        "0x7CDE3759L", "0xCBEE7460L", "0x4085F2A7L", "0xCE77326EL",
-        "0xA6078084L", "0x19F8509EL", "0xE8EFD855L", "0x61D99735L",
-        "0xA969A7AAL", "0xC50C06C2L", "0x5A04ABFCL", "0x800BCADCL",
-        "0x9E447A2EL", "0xC3453484L", "0xFDD56705L", "0x0E1E9EC9L",
-        "0xDB73DBD3L", "0x105588CDL", "0x675FDA79L", "0xE3674340L",
-        "0xC5C43465L", "0x713E38D8L", "0x3D28F89EL", "0xF16DFF20L",
-        "0x153E21E7L", "0x8FB03D4AL", "0xE6E39F2BL", "0xDB83ADF7L"};
+        "D1310BA6", "98DFB5AC", "2FFD72DB", "D01ADFB7",
+        "B8E1AFED", "6A267E96", "BA7C9045", "F12C7F99",
+        "24A19947", "B3916CF7", "0801F2E2", "858EFC16",
+        "636920D8", "71574E69", "A458FEA3", "F4933D7E",
+        "0D95748F", "728EB658", "718BCD58", "82154AEE",
+        "7B54A41D", "C25A59B5", "9C30D539", "2AF26013",
+        "C5D1B023", "286085F0", "CA417918", "B8DB38EF",
+        "8E79DCB0", "603A180E", "6C9E0E8B", "B01E8A3E",
+        "D71577C1", "BD314B27", "78AF2FDA", "55605C60",
+        "E65525F3", "AA55AB94", "57489862", "63E81440",
+        "55CA396A", "2AAB10B6", "B4CC5C34", "1141E8CE",
+        "A15486AF", "7C72E993", "B3EE1411", "636FBC2A",
+        "2BA9C55D", "741831F6", "CE5C3E16", "9B87931E",
+        "AFD6BA33", "6C24CF5C", "7A325381", "28958677",
+        "3B8F4898", "6B4BB9AF", "C4BFE81B", "66282193",
+        "61D809CC", "FB21A991", "487CAC60", "5DEC8032",
+        "EF845D5D", "E98575B1", "DC262302", "EB651B88",
+        "23893E81", "D396ACC5", "0F6D6FF3", "83F44239",
+        "2E0B4482", "A4842004", "69C8F04A", "9E1F9B5E",
+        "21C66842", "F6E96C9A", "670C9C61", "ABD388F0",
+        "6A51A0D2", "D8542F68", "960FA728", "AB5133A3",
+        "6EEF0B6C", "137A3BE4", "BA3BF050", "7EFB2A98",
+        "A1F1651D", "39AF0176", "66CA593E", "82430E88",
+        "8CEE8619", "456F9FB4", "7D84A5C3", "3B8B5EBE",
+        "E06F75D8", "85C12073", "401A449F", "56C16AA6",
+        "4ED3AA62", "363F7706", "1BFEDF72", "429B023D",
+        "37D0D724", "D00A1248", "DB0FEAD3", "49F1C09B",
+        "075372C9", "80991B7B", "25D479D8", "F6E8DEF7",
+        "E3FE501A", "B6794C3B", "976CE0BD", "04C006BA",
+        "C1A94FB6", "409F60C4", "5E5C9EC2", "196A2463",
+        "68FB6FAF", "3E6C53B5", "1339B2EB", "3B52EC6F",
+        "6DFC511F", "9B30952C", "CC814544", "AF5EBD09",
+        "BEE3D004", "DE334AFD", "660F2807", "192E4BB3",
+        "C0CBA857", "45C8740F", "D20B5F39", "B9D3FBDB",
+        "5579C0BD", "1A60320A", "D6A100C6", "402C7279",
+        "679F25FE", "FB1FA3CC", "8EA5E9F8", "DB3222F8",
+        "3C7516DF", "FD616B15", "2F501EC8", "AD0552AB",
+        "323DB5FA", "FD238760", "53317B48", "3E00DF82",
+        "9E5C57BB", "CA6F8CA0", "1A87562E", "DF1769DB",
+        "D542A8F6", "287EFFC3", "AC6732C6", "8C4F5573",
+        "695B27B0", "BBCA58C8", "E1FFA35D", "B8F011A0",
+        "10FA3D98", "FD2183B8", "4AFCB56C", "2DD1D35B",
+        "9A53E479", "B6F84565", "D28E49BC", "4BFB9790",
+        "E1DDF2DA", "A4CB7E33", "62FB1341", "CEE4C6E8",
+        "EF20CADA", "36774C01", "D07E9EFE", "2BF11FB4",
+        "95DBDA4D", "AE909198", "EAAD8E71", "6B93D5A0",
+        "D08ED1D0", "AFC725E0", "8E3C5B2F", "8E7594B7",
+        "8FF6E2FB", "F2122B64", "8888B812", "900DF01C",
+        "4FAD5EA0", "688FC31C", "D1CFF191", "B3A8C1AD",
+        "2F2F2218", "BE0E1777", "EA752DFE", "8B021FA1",
+        "E5A0CC0F", "B56F74E8", "18ACF3D6", "CE89E299",
+        "B4A84FE0", "FD13E0B7", "7CC43B81", "D2ADA8D9",
+        "165FA266", "80957705", "93CC7314", "211A1477",
+        "E6AD2065", "77B5FA86", "C75442F5", "FB9D35CF",
+        "EBCDAF0C", "7B3E89A0", "D6411BD3", "AE1E7E49",
+        "00250E2D", "2071B35E", "226800BB", "57B8E0AF",
+        "2464369B", "F009B91E", "5563911D", "59DFA6AA",
+        "78C14389", "D95A537F", "207D5BA2", "02E5B9C5",
+        "83260376", "6295CFA9", "11C81968", "4E734A41",
+        "B3472DCA", "7B14A94A", "1B510052", "9A532915",
+        "D60F573F", "BC9BC6E4", "2B60A476", "81E67400",
+        "08BA6FB5", "571BE91F", "F296EC6B", "2A0DD915",
+        "B6636521", "E7B9F9B6", "FF34052E", "C5855664",
+        "53B02D5D", "A99F8FA1", "08BA4799", "6E85076A"};
+    static String s2[] = {
+        "4B7A70E9", "B5B32944", "DB75092E", "C4192623",
+        "AD6EA6B0", "49A7DF7D", "9CEE60B8", "8FEDB266",
+        "ECAA8C71", "699A17FF", "5664526C", "C2B19EE1",
+        "193602A5", "75094C29", "A0591340", "E4183A3E",
+        "3F54989A", "5B429D65", "6B8FE4D6", "99F73FD6",
+        "A1D29C07", "EFE830F5", "4D2D38E6", "F0255DC1",
+        "4CDD2086", "8470EB26", "6382E9C6", "021ECC5E",
+        "09686B3F", "3EBAEFC9", "3C971814", "6B6A70A1",
+        "687F3584", "52A0E286", "B79C5305", "AA500737",
+        "3E07841C", "7FDEAE5C", "8E7D44EC", "5716F2B8",
+        "B03ADA37", "F0500C0D", "F01C1F04", "0200B3FF",
+        "AE0CF51A", "3CB574B2", "25837A58", "DC0921BD",
+        "D19113F9", "7CA92FF6", "94324773", "22F54701",
+        "3AE5E581", "37C2DADC", "C8B57634", "9AF3DDA7",
+        "A9446146", "0FD0030E", "ECC8C73E", "A4751E41",
+        "E238CD99", "3BEA0E2F", "3280BBA1", "183EB331",
+        "4E548B38", "4F6DB908", "6F420D03", "F60A04BF",
+        "2CB81290", "24977C79", "5679B072", "BCAF89AF",
+        "DE9A771F", "D9930810", "B38BAE12", "DCCF3F2E",
+        "5512721F", "2E6B7124", "501ADDE6", "9F84CD87",
+        "7A584718", "7408DA17", "BC9F9ABC", "E94B7D8C",
+        "EC7AEC3A", "DB851DFA", "63094366", "C464C3D2",
+        "EF1C1847", "3215D908", "DD433B37", "24C2BA16",
+        "12A14D43", "2A65C451", "50940002", "133AE4DD",
+        "71DFF89E", "10314E55", "81AC77D6", "5F11199B",
+        "043556F1", "D7A3C76B", "3C11183B", "5924A509",
+        "F28FE6ED", "97F1FBFA", "9EBABF2C", "1E153C6E",
+        "86E34570", "EAE96FB1", "860E5E0A", "5A3E2AB3",
+        "771FE71C", "4E3D06FA", "2965DCB9", "99E71D0F",
+        "803E89D6", "5266C825", "2E4CC978", "9C10B36A",
+        "C6150EBA", "94E2EA78", "A5FC3C53", "1E0A2DF4",
+        "F2F74EA7", "361D2B3D", "1939260F", "19C27960",
+        "5223A708", "F71312B6", "EBADFE6E", "EAC31F66",
+        "E3BC4595", "A67BC883", "B17F37D1", "018CFF28",
+        "C332DDEF", "BE6C5AA5", "65582185", "68AB9802",
+        "EECEA50F", "DB2F953B", "2AEF7DAD", "5B6E2F84",
+        "1521B628", "29076170", "ECDD4775", "619F1510",
+        "13CCA830", "EB61BD96", "0334FE1E", "AA0363CF",
+        "B5735C90", "4C70A239", "D59E9E0B", "CBAADE14",
+        "EECC86BC", "60622CA7", "9CAB5CAB", "B2F3846E",
+        "648B1EAF", "19BDF0CA", "A02369B9", "655ABB50",
+        "40685A32", "3C2AB4B3", "319EE9D5", "C021B8F7",
+        "9B540B19", "875FA099", "95F7997E", "623D7DA8",
+        "F837889A", "97E32D77", "11ED935F", "16681281",
+        "0E358829", "C7E61FD6", "96DEDFA1", "7858BA99",
+        "57F584A5", "1B227263", "9B83C3FF", "1AC24696",
+        "CDB30AEB", "532E3054", "8FD948E4", "6DBC3128",
+        "58EBF2EF", "34C6FFEA", "FE28ED61", "EE7C3C73",
+        "5D4A14D9", "E864B7E3", "42105D14", "203E13E0",
+        "45EEE2B6", "A3AAABEA", "DB6C4F15", "FACB4FD0",
+        "C742F442", "EF6ABBB5", "654F3B1D", "41CD2105",
+        "D81E799E", "86854DC7", "E44B476A", "3D816250",
+        "CF62A1F2", "5B8D2646", "FC8883A0", "C1C7B6A3",
+        "7F1524C3", "69CB7492", "47848A0B", "5692B285",
+        "095BBF00", "AD19489D", "1462B174", "23820E00",
+        "58428D2A", "0C55F5EA", "1DADF43E", "233F7061",
+        "3372F092", "8D937E41", "D65FECF1", "6C223BDB",
+        "7CDE3759", "CBEE7460", "4085F2A7", "CE77326E",
+        "A6078084", "19F8509E", "E8EFD855", "61D99735",
+        "A969A7AA", "C50C06C2", "5A04ABFC", "800BCADC",
+        "9E447A2E", "C3453484", "FDD56705", "0E1E9EC9",
+        "DB73DBD3", "105588CD", "675FDA79", "E3674340",
+        "C5C43465", "713E38D8", "3D28F89E", "F16DFF20",
+        "153E21E7", "8FB03D4A", "E6E39F2B", "DB83ADF7"};
 
     static String[] s3 = {
-        "0xE93D5A68L", "0x948140F7L", "0xF64C261CL", "0x94692934L",
-        "0x411520F7L", "0x7602D4F7L", "0xBCF46B2EL", "0xD4A20068L",
-        "0xD4082471L", "0x3320F46AL", "0x43B7D4B7L", "0x500061AFL",
-        "0x1E39F62EL", "0x97244546L", "0x14214F74L", "0xBF8B8840L",
-        "0x4D95FC1DL", "0x96B591AFL", "0x70F4DDD3L", "0x66A02F45L",
-        "0xBFBC09ECL", "0x03BD9785L", "0x7FAC6DD0L", "0x31CB8504L",
-        "0x96EB27B3L", "0x55FD3941L", "0xDA2547E6L", "0xABCA0A9AL",
-        "0x28507825L", "0x530429F4L", "0x0A2C86DAL", "0xE9B66DFBL",
-        "0x68DC1462L", "0xD7486900L", "0x680EC0A4L", "0x27A18DEEL",
-        "0x4F3FFEA2L", "0xE887AD8CL", "0xB58CE006L", "0x7AF4D6B6L",
-        "0xAACE1E7CL", "0xD3375FECL", "0xCE78A399L", "0x406B2A42L",
-        "0x20FE9E35L", "0xD9F385B9L", "0xEE39D7ABL", "0x3B124E8BL",
-        "0x1DC9FAF7L", "0x4B6D1856L", "0x26A36631L", "0xEAE397B2L",
-        "0x3A6EFA74L", "0xDD5B4332L", "0x6841E7F7L", "0xCA7820FBL",
-        "0xFB0AF54EL", "0xD8FEB397L", "0x454056ACL", "0xBA489527L",
-        "0x55533A3AL", "0x20838D87L", "0xFE6BA9B7L", "0xD096954BL",
-        "0x55A867BCL", "0xA1159A58L", "0xCCA92963L", "0x99E1DB33L",
-        "0xA62A4A56L", "0x3F3125F9L", "0x5EF47E1CL", "0x9029317CL",
-        "0xFDF8E802L", "0x04272F70L", "0x80BB155CL", "0x05282CE3L",
-        "0x95C11548L", "0xE4C66D22L", "0x48C1133FL", "0xC70F86DCL",
-        "0x07F9C9EEL", "0x41041F0FL", "0x404779A4L", "0x5D886E17L",
-        "0x325F51EBL", "0xD59BC0D1L", "0xF2BCC18FL", "0x41113564L",
-        "0x257B7834L", "0x602A9C60L", "0xDFF8E8A3L", "0x1F636C1BL",
-        "0x0E12B4C2L", "0x02E1329EL", "0xAF664FD1L", "0xCAD18115L",
-        "0x6B2395E0L", "0x333E92E1L", "0x3B240B62L", "0xEEBEB922L",
-        "0x85B2A20EL", "0xE6BA0D99L", "0xDE720C8CL", "0x2DA2F728L",
-        "0xD0127845L", "0x95B794FDL", "0x647D0862L", "0xE7CCF5F0L",
-        "0x5449A36FL", "0x877D48FAL", "0xC39DFD27L", "0xF33E8D1EL",
-        "0x0A476341L", "0x992EFF74L", "0x3A6F6EABL", "0xF4F8FD37L",
-        "0xA812DC60L", "0xA1EBDDF8L", "0x991BE14CL", "0xDB6E6B0DL",
-        "0xC67B5510L", "0x6D672C37L", "0x2765D43BL", "0xDCD0E804L",
-        "0xF1290DC7L", "0xCC00FFA3L", "0xB5390F92L", "0x690FED0BL",
-        "0x667B9FFBL", "0xCEDB7D9CL", "0xA091CF0BL", "0xD9155EA3L",
-        "0xBB132F88L", "0x515BAD24L", "0x7B9479BFL", "0x763BD6EBL",
-        "0x37392EB3L", "0xCC115979L", "0x8026E297L", "0xF42E312DL",
-        "0x6842ADA7L", "0xC66A2B3BL", "0x12754CCCL", "0x782EF11CL",
-        "0x6A124237L", "0xB79251E7L", "0x06A1BBE6L", "0x4BFB6350L",
-        "0x1A6B1018L", "0x11CAEDFAL", "0x3D25BDD8L", "0xE2E1C3C9L",
-        "0x44421659L", "0x0A121386L", "0xD90CEC6EL", "0xD5ABEA2AL",
-        "0x64AF674EL", "0xDA86A85FL", "0xBEBFE988L", "0x64E4C3FEL",
-        "0x9DBC8057L", "0xF0F7C086L", "0x60787BF8L", "0x6003604DL",
-        "0xD1FD8346L", "0xF6381FB0L", "0x7745AE04L", "0xD736FCCCL",
-        "0x83426B33L", "0xF01EAB71L", "0xB0804187L", "0x3C005E5FL",
-        "0x77A057BEL", "0xBDE8AE24L", "0x55464299L", "0xBF582E61L",
-        "0x4E58F48FL", "0xF2DDFDA2L", "0xF474EF38L", "0x8789BDC2L",
-        "0x5366F9C3L", "0xC8B38E74L", "0xB475F255L", "0x46FCD9B9L",
-        "0x7AEB2661L", "0x8B1DDF84L", "0x846A0E79L", "0x915F95E2L",
-        "0x466E598EL", "0x20B45770L", "0x8CD55591L", "0xC902DE4CL",
-        "0xB90BACE1L", "0xBB8205D0L", "0x11A86248L", "0x7574A99EL",
-        "0xB77F19B6L", "0xE0A9DC09L", "0x662D09A1L", "0xC4324633L",
-        "0xE85A1F02L", "0x09F0BE8CL", "0x4A99A025L", "0x1D6EFE10L",
-        "0x1AB93D1DL", "0x0BA5A4DFL", "0xA186F20FL", "0x2868F169L",
-        "0xDCB7DA83L", "0x573906FEL", "0xA1E2CE9BL", "0x4FCD7F52L",
-        "0x50115E01L", "0xA70683FAL", "0xA002B5C4L", "0x0DE6D027L",
-        "0x9AF88C27L", "0x773F8641L", "0xC3604C06L", "0x61A806B5L",
-        "0xF0177A28L", "0xC0F586E0L", "0x006058AAL", "0x30DC7D62L",
-        "0x11E69ED7L", "0x2338EA63L", "0x53C2DD94L", "0xC2C21634L",
-        "0xBBCBEE56L", "0x90BCB6DEL", "0xEBFC7DA1L", "0xCE591D76L",
-        "0x6F05E409L", "0x4B7C0188L", "0x39720A3DL", "0x7C927C24L",
-        "0x86E3725FL", "0x724D9DB9L", "0x1AC15BB4L", "0xD39EB8FCL",
-        "0xED545578L", "0x08FCA5B5L", "0xD83D7CD3L", "0x4DAD0FC4L",
-        "0x1E50EF5EL", "0xB161E6F8L", "0xA28514D9L", "0x6C51133CL",
-        "0x6FD5C7E7L", "0x56E14EC4L", "0x362ABFCEL", "0xDDC6C837L",
-        "0xD79A3234L", "0x92638212L", "0x670EFA8EL", "0x406000E0L"};
+        "E93D5A68", "948140F7", "F64C261C", "94692934",
+        "411520F7", "7602D4F7", "BCF46B2E", "D4A20068",
+        "D4082471", "3320F46A", "43B7D4B7", "500061AF",
+        "1E39F62E", "97244546", "14214F74", "BF8B8840",
+        "4D95FC1D", "96B591AF", "70F4DDD3", "66A02F45",
+        "BFBC09EC", "03BD9785", "7FAC6DD0", "31CB8504",
+        "96EB27B3", "55FD3941", "DA2547E6", "ABCA0A9A",
+        "28507825", "530429F4", "0A2C86DA", "E9B66DFB",
+        "68DC1462", "D7486900", "680EC0A4", "27A18DEE",
+        "4F3FFEA2", "E887AD8C", "B58CE006", "7AF4D6B6",
+        "AACE1E7C", "D3375FEC", "CE78A399", "406B2A42",
+        "20FE9E35", "D9F385B9", "EE39D7AB", "3B124E8B",
+        "1DC9FAF7", "4B6D1856", "26A36631", "EAE397B2",
+        "3A6EFA74", "DD5B4332", "6841E7F7", "CA7820FB",
+        "FB0AF54E", "D8FEB397", "454056AC", "BA489527",
+        "55533A3A", "20838D87", "FE6BA9B7", "D096954B",
+        "55A867BC", "A1159A58", "CCA92963", "99E1DB33",
+        "A62A4A56", "3F3125F9", "5EF47E1C", "9029317C",
+        "FDF8E802", "04272F70", "80BB155C", "05282CE3",
+        "95C11548", "E4C66D22", "48C1133F", "C70F86DC",
+        "07F9C9EE", "41041F0F", "404779A4", "5D886E17",
+        "325F51EB", "D59BC0D1", "F2BCC18F", "41113564",
+        "257B7834", "602A9C60", "DFF8E8A3", "1F636C1B",
+        "0E12B4C2", "02E1329E", "AF664FD1", "CAD18115",
+        "6B2395E0", "333E92E1", "3B240B62", "EEBEB922",
+        "85B2A20E", "E6BA0D99", "DE720C8C", "2DA2F728",
+        "D0127845", "95B794FD", "647D0862", "E7CCF5F0",
+        "5449A36F", "877D48FA", "C39DFD27", "F33E8D1E",
+        "0A476341", "992EFF74", "3A6F6EAB", "F4F8FD37",
+        "A812DC60", "A1EBDDF8", "991BE14C", "DB6E6B0D",
+        "C67B5510", "6D672C37", "2765D43B", "DCD0E804",
+        "F1290DC7", "CC00FFA3", "B5390F92", "690FED0B",
+        "667B9FFB", "CEDB7D9C", "A091CF0B", "D9155EA3",
+        "BB132F88", "515BAD24", "7B9479BF", "763BD6EB",
+        "37392EB3", "CC115979", "8026E297", "F42E312D",
+        "6842ADA7", "C66A2B3B", "12754CCC", "782EF11C",
+        "6A124237", "B79251E7", "06A1BBE6", "4BFB6350",
+        "1A6B1018", "11CAEDFA", "3D25BDD8", "E2E1C3C9",
+        "44421659", "0A121386", "D90CEC6E", "D5ABEA2A",
+        "64AF674E", "DA86A85F", "BEBFE988", "64E4C3FE",
+        "9DBC8057", "F0F7C086", "60787BF8", "6003604D",
+        "D1FD8346", "F6381FB0", "7745AE04", "D736FCCC",
+        "83426B33", "F01EAB71", "B0804187", "3C005E5F",
+        "77A057BE", "BDE8AE24", "55464299", "BF582E61",
+        "4E58F48F", "F2DDFDA2", "F474EF38", "8789BDC2",
+        "5366F9C3", "C8B38E74", "B475F255", "46FCD9B9",
+        "7AEB2661", "8B1DDF84", "846A0E79", "915F95E2",
+        "466E598E", "20B45770", "8CD55591", "C902DE4C",
+        "B90BACE1", "BB8205D0", "11A86248", "7574A99E",
+        "B77F19B6", "E0A9DC09", "662D09A1", "C4324633",
+        "E85A1F02", "09F0BE8C", "4A99A025", "1D6EFE10",
+        "1AB93D1D", "0BA5A4DF", "A186F20F", "2868F169",
+        "DCB7DA83", "573906FE", "A1E2CE9B", "4FCD7F52",
+        "50115E01", "A70683FA", "A002B5C4", "0DE6D027",
+        "9AF88C27", "773F8641", "C3604C06", "61A806B5",
+        "F0177A28", "C0F586E0", "006058AA", "30DC7D62",
+        "11E69ED7", "2338EA63", "53C2DD94", "C2C21634",
+        "BBCBEE56", "90BCB6DE", "EBFC7DA1", "CE591D76",
+        "6F05E409", "4B7C0188", "39720A3D", "7C927C24",
+        "86E3725F", "724D9DB9", "1AC15BB4", "D39EB8FC",
+        "ED545578", "08FCA5B5", "D83D7CD3", "4DAD0FC4",
+        "1E50EF5E", "B161E6F8", "A28514D9", "6C51133C",
+        "6FD5C7E7", "56E14EC4", "362ABFCE", "DDC6C837",
+        "D79A3234", "92638212", "670EFA8E", "406000E0"};
 
     static String[] s4 = {
-        "0x3A39CE37L", "0xD3FAF5CFL", "0xABC27737L", "0x5AC52D1BL",
-        "0x5CB0679EL", "0x4FA33742L", "0xD3822740L", "0x99BC9BBEL",
-        "0xD5118E9DL", "0xBF0F7315L", "0xD62D1C7EL", "0xC700C47BL",
-        "0xB78C1B6BL", "0x21A19045L", "0xB26EB1BEL", "0x6A366EB4L",
-        "0x5748AB2FL", "0xBC946E79L", "0xC6A376D2L", "0x6549C2C8L",
-        "0x530FF8EEL", "0x468DDE7DL", "0xD5730A1DL", "0x4CD04DC6L",
-        "0x2939BBDBL", "0xA9BA4650L", "0xAC9526E8L", "0xBE5EE304L",
-        "0xA1FAD5F0L", "0x6A2D519AL", "0x63EF8CE2L", "0x9A86EE22L",
-        "0xC089C2B8L", "0x43242EF6L", "0xA51E03AAL", "0x9CF2D0A4L",
-        "0x83C061BAL", "0x9BE96A4DL", "0x8FE51550L", "0xBA645BD6L",
-        "0x2826A2F9L", "0xA73A3AE1L", "0x4BA99586L", "0xEF5562E9L",
-        "0xC72FEFD3L", "0xF752F7DAL", "0x3F046F69L", "0x77FA0A59L",
-        "0x80E4A915L", "0x87B08601L", "0x9B09E6ADL", "0x3B3EE593L",
-        "0xE990FD5AL", "0x9E34D797L", "0x2CF0B7D9L", "0x022B8B51L",
-        "0x96D5AC3AL", "0x017DA67DL", "0xD1CF3ED6L", "0x7C7D2D28L",
-        "0x1F9F25CFL", "0xADF2B89BL", "0x5AD6B472L", "0x5A88F54CL",
-        "0xE029AC71L", "0xE019A5E6L", "0x47B0ACFDL", "0xED93FA9BL",
-        "0xE8D3C48DL", "0x283B57CCL", "0xF8D56629L", "0x79132E28L",
-        "0x785F0191L", "0xED756055L", "0xF7960E44L", "0xE3D35E8CL",
-        "0x15056DD4L", "0x88F46DBAL", "0x03A16125L", "0x0564F0BDL",
-        "0xC3EB9E15L", "0x3C9057A2L", "0x97271AECL", "0xA93A072AL",
-        "0x1B3F6D9BL", "0x1E6321F5L", "0xF59C66FBL", "0x26DCF319L",
-        "0x7533D928L", "0xB155FDF5L", "0x03563482L", "0x8ABA3CBBL",
-        "0x28517711L", "0xC20AD9F8L", "0xABCC5167L", "0xCCAD925FL",
-        "0x4DE81751L", "0x3830DC8EL", "0x379D5862L", "0x9320F991L",
-        "0xEA7A90C2L", "0xFB3E7BCEL", "0x5121CE64L", "0x774FBE32L",
-        "0xA8B6E37EL", "0xC3293D46L", "0x48DE5369L", "0x6413E680L",
-        "0xA2AE0810L", "0xDD6DB224L", "0x69852DFDL", "0x09072166L",
-        "0xB39A460AL", "0x6445C0DDL", "0x586CDECFL", "0x1C20C8AEL",
-        "0x5BBEF7DDL", "0x1B588D40L", "0xCCD2017FL", "0x6BB4E3BBL",
-        "0xDDA26A7EL", "0x3A59FF45L", "0x3E350A44L", "0xBCB4CDD5L",
-        "0x72EACEA8L", "0xFA6484BBL", "0x8D6612AEL", "0xBF3C6F47L",
-        "0xD29BE463L", "0x542F5D9EL", "0xAEC2771BL", "0xF64E6370L",
-        "0x740E0D8DL", "0xE75B1357L", "0xF8721671L", "0xAF537D5DL",
-        "0x4040CB08L", "0x4EB4E2CCL", "0x34D2466AL", "0x0115AF84L",
-        "0xE1B00428L", "0x95983A1DL", "0x06B89FB4L", "0xCE6EA048L",
-        "0x6F3F3B82L", "0x3520AB82L", "0x011A1D4BL", "0x277227F8L",
-        "0x611560B1L", "0xE7933FDCL", "0xBB3A792BL", "0x344525BDL",
-        "0xA08839E1L", "0x51CE794BL", "0x2F32C9B7L", "0xA01FBAC9L",
-        "0xE01CC87EL", "0xBCC7D1F6L", "0xCF0111C3L", "0xA1E8AAC7L",
-        "0x1A908749L", "0xD44FBD9AL", "0xD0DADECBL", "0xD50ADA38L",
-        "0x0339C32AL", "0xC6913667L", "0x8DF9317CL", "0xE0B12B4FL",
-        "0xF79E59B7L", "0x43F5BB3AL", "0xF2D519FFL", "0x27D9459CL",
-        "0xBF97222CL", "0x15E6FC2AL", "0x0F91FC71L", "0x9B941525L",
-        "0xFAE59361L", "0xCEB69CEBL", "0xC2A86459L", "0x12BAA8D1L",
-        "0xB6C1075EL", "0xE3056A0CL", "0x10D25065L", "0xCB03A442L",
-        "0xE0EC6E0EL", "0x1698DB3BL", "0x4C98A0BEL", "0x3278E964L",
-        "0x9F1F9532L", "0xE0D392DFL", "0xD3A0342BL", "0x8971F21EL",
-        "0x1B0A7441L", "0x4BA3348CL", "0xC5BE7120L", "0xC37632D8L",
-        "0xDF359F8DL", "0x9B992F2EL", "0xE60B6F47L", "0x0FE3F11DL",
-        "0xE54CDA54L", "0x1EDAD891L", "0xCE6279CFL", "0xCD3E7E6FL",
-        "0x1618B166L", "0xFD2C1D05L", "0x848FD2C5L", "0xF6FB2299L",
-        "0xF523F357L", "0xA6327623L", "0x93A83531L", "0x56CCCD02L",
-        "0xACF08162L", "0x5A75EBB5L", "0x6E163697L", "0x88D273CCL",
-        "0xDE966292L", "0x81B949D0L", "0x4C50901BL", "0x71C65614L",
-        "0xE6C6C7BDL", "0x327A140AL", "0x45E1D006L", "0xC3F27B9AL",
-        "0xC9AA53FDL", "0x62A80F00L", "0xBB25BFE2L", "0x35BDD2F6L",
-        "0x71126905L", "0xB2040222L", "0xB6CBCF7CL", "0xCD769C2BL",
-        "0x53113EC0L", "0x1640E3D3L", "0x38ABBD60L", "0x2547ADF0L",
-        "0xBA38209CL", "0xF746CE76L", "0x77AFA1C5L", "0x20756060L",
-        "0x85CBFE4EL", "0x8AE88DD8L", "0x7AAAF9B0L", "0x4CF9AA7EL",
-        "0x1948C25CL", "0x02FB8A8CL", "0x01C36AE4L", "0xD6EBE1F9L",
-        "0x90D4F869L", "0xA65CDEA0L", "0x3F09252DL", "0xC208E69FL",
-        "0xB74E6132L", "0xCE77E25BL", "0x578FDFE3L", "0x3AC372E6L"};
+        "3A39CE37", "D3FAF5CF", "ABC27737", "5AC52D1B",
+        "5CB0679E", "4FA33742", "D3822740", "99BC9BBE",
+        "D5118E9D", "BF0F7315", "D62D1C7E", "C700C47B",
+        "B78C1B6B", "21A19045", "B26EB1BE", "6A366EB4",
+        "5748AB2F", "BC946E79", "C6A376D2", "6549C2C8",
+        "530FF8EE", "468DDE7D", "D5730A1D", "4CD04DC6",
+        "2939BBDB", "A9BA4650", "AC9526E8", "BE5EE304",
+        "A1FAD5F0", "6A2D519A", "63EF8CE2", "9A86EE22",
+        "C089C2B8", "43242EF6", "A51E03AA", "9CF2D0A4",
+        "83C061BA", "9BE96A4D", "8FE51550", "BA645BD6",
+        "2826A2F9", "A73A3AE1", "4BA99586", "EF5562E9",
+        "C72FEFD3", "F752F7DA", "3F046F69", "77FA0A59",
+        "80E4A915", "87B08601", "9B09E6AD", "3B3EE593",
+        "E990FD5A", "9E34D797", "2CF0B7D9", "022B8B51",
+        "96D5AC3A", "017DA67D", "D1CF3ED6", "7C7D2D28",
+        "1F9F25CF", "ADF2B89B", "5AD6B472", "5A88F54C",
+        "E029AC71", "E019A5E6", "47B0ACFD", "ED93FA9B",
+        "E8D3C48D", "283B57CC", "F8D56629", "79132E28",
+        "785F0191", "ED756055", "F7960E44", "E3D35E8C",
+        "15056DD4", "88F46DBA", "03A16125", "0564F0BD",
+        "C3EB9E15", "3C9057A2", "97271AEC", "A93A072A",
+        "1B3F6D9B", "1E6321F5", "F59C66FB", "26DCF319",
+        "7533D928", "B155FDF5", "03563482", "8ABA3CBB",
+        "28517711", "C20AD9F8", "ABCC5167", "CCAD925F",
+        "4DE81751", "3830DC8E", "379D5862", "9320F991",
+        "EA7A90C2", "FB3E7BCE", "5121CE64", "774FBE32",
+        "A8B6E37E", "C3293D46", "48DE5369", "6413E680",
+        "A2AE0810", "DD6DB224", "69852DFD", "09072166",
+        "B39A460A", "6445C0DD", "586CDECF", "1C20C8AE",
+        "5BBEF7DD", "1B588D40", "CCD2017F", "6BB4E3BB",
+        "DDA26A7E", "3A59FF45", "3E350A44", "BCB4CDD5",
+        "72EACEA8", "FA6484BB", "8D6612AE", "BF3C6F47",
+        "D29BE463", "542F5D9E", "AEC2771B", "F64E6370",
+        "740E0D8D", "E75B1357", "F8721671", "AF537D5D",
+        "4040CB08", "4EB4E2CC", "34D2466A", "0115AF84",
+        "E1B00428", "95983A1D", "06B89FB4", "CE6EA048",
+        "6F3F3B82", "3520AB82", "011A1D4B", "277227F8",
+        "611560B1", "E7933FDC", "BB3A792B", "344525BD",
+        "A08839E1", "51CE794B", "2F32C9B7", "A01FBAC9",
+        "E01CC87E", "BCC7D1F6", "CF0111C3", "A1E8AAC7",
+        "1A908749", "D44FBD9A", "D0DADECB", "D50ADA38",
+        "0339C32A", "C6913667", "8DF9317C", "E0B12B4F",
+        "F79E59B7", "43F5BB3A", "F2D519FF", "27D9459C",
+        "BF97222C", "15E6FC2A", "0F91FC71", "9B941525",
+        "FAE59361", "CEB69CEB", "C2A86459", "12BAA8D1",
+        "B6C1075E", "E3056A0C", "10D25065", "CB03A442",
+        "E0EC6E0E", "1698DB3B", "4C98A0BE", "3278E964",
+        "9F1F9532", "E0D392DF", "D3A0342B", "8971F21E",
+        "1B0A7441", "4BA3348C", "C5BE7120", "C37632D8",
+        "DF359F8D", "9B992F2E", "E60B6F47", "0FE3F11D",
+        "E54CDA54", "1EDAD891", "CE6279CF", "CD3E7E6F",
+        "1618B166", "FD2C1D05", "848FD2C5", "F6FB2299",
+        "F523F357", "A6327623", "93A83531", "56CCCD02",
+        "ACF08162", "5A75EBB5", "6E163697", "88D273CC",
+        "DE966292", "81B949D0", "4C50901B", "71C65614",
+        "E6C6C7BD", "327A140A", "45E1D006", "C3F27B9A",
+        "C9AA53FD", "62A80F00", "BB25BFE2", "35BDD2F6",
+        "71126905", "B2040222", "B6CBCF7C", "CD769C2B",
+        "53113EC0", "1640E3D3", "38ABBD60", "2547ADF0",
+        "BA38209C", "F746CE76", "77AFA1C5", "20756060",
+        "85CBFE4E", "8AE88DD8", "7AAAF9B0", "4CF9AA7E",
+        "1948C25C", "02FB8A8C", "01C36AE4", "D6EBE1F9",
+        "90D4F869", "A65CDEA0", "3F09252D", "C208E69F",
+        "B74E6132", "CE77E25B", "578FDFE3", "3AC372E6"};
 
     public static void main(String[] args) {
         subXor(p, key);
         
+
+        pReplace(IV);
+        String cipher = bin2Hex(encrypt("aaaaaaaaaaaaaaaa"));
+        System.out.println(cipher);
+        String plain = bin2Hex(decrypt(cipher));
+        System.out.println(plain);
+
+    }
+
+    static String hex2Bin(String h) {
+        long hL = Long.parseLong(h, 16);
+        String bin = Long.toBinaryString(hL);
+        //pad with leading 0 after function call if needed        
+        return bin;
+    }
+
+    static String bin2Hex(String b) {
+
+        long lL = Long.parseLong(b.substring(0, b.length() / 2), 2);
+        //   System.out.println(lL);
+        String hexL = Long.toString(lL, 16);
+
+        long rL = Long.parseLong(b.substring(b.length() / 2), 2);
+        String hexR = Long.toString(rL, 16);
+
+        String hex = hexL.concat(hexR);
+
+        //pad with leading 0 after function call if needed        
+        return hex;
+    }
+
+    static String ascii2Bin(String as) {
+        int asL = as.charAt(0);
+        String bin = Integer.toBinaryString(asL);
+        //pad with leading 0 after function call if needed        
+        while (bin.length() < 8) {
+            bin = "0".concat(bin);
+        }
+        return bin;
     }
 
     static void subXor(String[] a, String b) {// a = first p array b = initial key
@@ -291,27 +329,265 @@ public class VEA {
             String block = b.substring(i, i + 8);
             bArray[i / 8] = block;
         }
-        //complete the xor operation on the p array and key
-        //loop through the key as many times as required to xor with every 
-        //element in the p array
-        for (int i = 0; i < a.length; i++) {            
-                String aE = a[i];
-                String bE = bArray[i%4];
-                long aL = Long.parseLong(aE, 16);
-                long bL = Long.parseLong(bE, 16);
-                long xor = aL ^ bL;
-                String sXor = Long.toBinaryString(xor);
-                //pad with leading 0 if needed
-                while (sXor.length() < 32) {
-                    sXor = "0".concat(sXor);
-                }
-                pPost[i] = sXor;          
-            
+
+        for (int i = 0; i < a.length; i++) {
+            String aE = a[i];
+            String bE = bArray[i % 4];
+            long aL = Long.parseLong(aE, 16);
+            long bL = Long.parseLong(bE, 16);
+            long xor = aL ^ bL;
+            String sXor = Long.toBinaryString(xor);
+            //pad with leading 0 if needed
+            while (sXor.length() < 32) {
+                sXor = "0".concat(sXor);
+            }
+            sXor = bin2Hex(sXor);
+            p[i] = sXor;
+
         }
     }
-    
-    static void encrypt(String x){
-         
+
+    static void pReplace(String IV) {
+        String rep = encrypt(IV);
+        String xRepInitial = bin2Hex(rep.substring(0, 32));
+        String yRepInitial = bin2Hex(rep.substring(32));
+        p[0] = xRepInitial;
+        p[1] = yRepInitial;
+        for (int i = 2; i < 17; i++) {
+            rep = encrypt(rep);
+            String xRep = bin2Hex(rep.substring(0, 32));
+            String yRep = bin2Hex(rep.substring(32));
+            p[i] = xRep;
+            p[i + 1] = yRep;
+        }
+        sReplace(p[16].concat(p[17]));
+    }
+
+    static void sReplace(String p) {
+     ;
+        String l = hex2Bin(p.substring(0, 8));
+        String r = hex2Bin(p.substring(8));
+        String rep = l.concat(r);
+
+        for (int i = 0; i < 255; i++) {
+
+            rep = encrypt(rep);
+            String xRep = bin2Hex(rep.substring(0, 32));
+            String yRep = bin2Hex(rep.substring(32));
+            s1[i] = xRep;
+            s1[i + 1] = yRep;
+
+        }
+
+        for (int i = 0; i < 255; i++) {
+
+            rep = encrypt(rep);
+            String xRep = bin2Hex(rep.substring(0, 32));
+            String yRep = bin2Hex(rep.substring(32));
+            s2[i] = xRep;
+            s2[i + 1] = yRep;
+
+        }
+        for (int i = 0; i < 255; i++) {
+
+            rep = encrypt(rep);
+            String xRep = bin2Hex(rep.substring(0, 32));
+            String yRep = bin2Hex(rep.substring(32));
+            s3[i] = xRep;
+            s3[i + 1] = yRep;
+
+        }
+
+        for (int i = 0; i < 255; i++) {
+
+            rep = encrypt(rep);
+            String xRep = bin2Hex(rep.substring(0, 32));
+            String yRep = bin2Hex(rep.substring(32));
+            s4[i] = xRep;
+            s4[i + 1] = yRep;
+
+        }
+
+    }
+
+    static String encrypt(String x) { // assume x is 64 bits padding can be done in separate function   x must be in binary
+
+        if (x.length() < 32) {
+            long lL = Long.parseLong(x.substring(0, x.length() / 2), 16);
+            long rL = Long.parseLong(x.substring(x.length() / 2), 16);
+
+            String tempL = Long.toBinaryString(lL);
+            String tempR = Long.toBinaryString(rL);
+            x = tempL.concat(tempR);
+            while (x.length() < 32) {
+                x = "0".concat(x);
+            }
+        }
+
+        String xlTemp = x.substring(0, 32);
+        String xrTemp = x.substring(32);
+
+        long xl = Long.parseLong(xlTemp, 2);
+        long xr = Long.parseLong(xrTemp, 2);
+        // rounds 1 - 16
+        for (int i = 0; i < 16; i++) {
+            long pL = Long.parseLong(p[i], 16);
+
+            long oldXR = xr;
+            
+            xr = xl ^ pL;
+
+            long postF = F(xr);
+            xl = postF ^ oldXR;
+
+        }
+
+        //round 17
+        long oldXL = xl;
+        xl = xr;
+        xr = oldXL;
+        xr = xr ^ Long.parseLong(p[16], 16);
+
+        // round 18
+        xl = xl ^ Long.parseLong(p[17], 16);
+      
+        String cipherTextL = Long.toBinaryString(xl);
+        String cipherTextR = Long.toBinaryString(xr);
+        String cipherText = cipherTextL.concat(cipherTextR);
+
+        return cipherText;
+    }
+
+    static long F(Long xl) {// Xl is 32 bits
+
+        String bin = Long.toBinaryString(xl);
+        //pad with leading 0 after function call if needed        
+        while (bin.length() < 32) {
+            bin = "0".concat(bin);
+        }
+       
+        String a = bin.substring(0, 8);
+        String b = bin.substring(8, 16);
+        String c = bin.substring(16, 24);
+        String d = bin.substring(24, 32);
+
+        String aSub = sBox1(a);
+        String bSub = sBox2(b);
+        String cSub = sBox3(c);
+        String dSub = sBox4(d);
+        long aL = Long.parseLong(aSub, 16);
+        long bL = Long.parseLong(bSub, 16);
+        long cL = Long.parseLong(cSub, 16);
+        long dL = Long.parseLong(dSub, 16);
+        long result = (((aL + bL) % (long) Math.pow(2, 32)) ^ cL) + (dL % (long) Math.pow(2, 32));
+
+        return result;
         
     }
+
+    static String sBox1(String aBin) {
+        String aXaxis = String.valueOf(aBin.charAt(0)).concat(String.valueOf(aBin.charAt(7)));
+        int sLocatorX = Integer.parseInt(aXaxis, 2);
+        String aYaxis = String.valueOf(aBin.substring(1, 7));
+        int sLocatorY = Integer.parseInt(aYaxis, 2);
+        String sValue;
+        if (sLocatorY > 0) {
+            sValue = s1[sLocatorX + 4 * (sLocatorY - 1)];
+        } else {
+            sValue = s1[sLocatorX + 4 * (sLocatorY)];
+        }
+        return sValue;
+    }
+
+    static String sBox2(String bBin) {
+        String bXaxis = String.valueOf(bBin.charAt(0)).concat(String.valueOf(bBin.charAt(7)));
+        int sLocatorX = Integer.parseInt(bXaxis, 2);
+        String bYaxis = String.valueOf(bBin.substring(1, 7));
+        int sLocatorY = Integer.parseInt(bYaxis, 2);
+        String sValue;
+        if (sLocatorY > 0) {
+            sValue = s2[sLocatorX + 4 * (sLocatorY - 1)];
+        } else {
+            sValue = s2[sLocatorX + 4 * (sLocatorY)];
+        }
+        return sValue;
+    }
+
+    static String sBox3(String cBin) {
+        String cXaxis = String.valueOf(cBin.charAt(0)).concat(String.valueOf(cBin.charAt(7)));
+        int sLocatorX = Integer.parseInt(cXaxis, 2);
+        String cYaxis = String.valueOf(cBin.substring(1, 7));
+        int sLocatorY = Integer.parseInt(cYaxis, 2);
+        String sValue;
+        if (sLocatorY > 0) {
+            sValue = s3[sLocatorX + 4 * (sLocatorY - 1)];
+        } else {
+            sValue = s3[sLocatorX + 4 * (sLocatorY)];
+        }
+        return sValue;
+    }
+
+    static String sBox4(String dBin) {
+        String dXaxis = String.valueOf(dBin.charAt(0)).concat(String.valueOf(dBin.charAt(7)));
+        int sLocatorX = Integer.parseInt(dXaxis, 2);
+        String dYaxis = String.valueOf(dBin.substring(1, 7));
+        int sLocatorY = Integer.parseInt(dYaxis, 2);
+        
+        String sValue;
+        if (sLocatorY > 0) {
+            sValue = s4[sLocatorX + 4 * (sLocatorY - 1)];
+        } else {
+            sValue = s4[sLocatorX + 4 * (sLocatorY)];
+        }
+        return sValue;
+    }
+
+    static String decrypt(String x) {
+
+        if (x.length() < 32) {
+            long lL = Long.parseLong(x.substring(0, x.length() / 2), 16);
+            long rL = Long.parseLong(x.substring(x.length() / 2), 16);
+
+            String tempL = Long.toBinaryString(lL);
+            String tempR = Long.toBinaryString(rL);
+            x = tempL.concat(tempR);
+            while (x.length() < 32) {
+                x = "0".concat(x);
+            }
+        }
+
+        String xlTemp = x.substring(0, 32);
+        String xrTemp = x.substring(32);
+
+        long xl = Long.parseLong(xlTemp, 2);
+        long xr = Long.parseLong(xrTemp, 2);
+        // rounds 1 - 16
+        for (int i = 17; i > 2; i--) {
+            long pL = Long.parseLong(p[i], 16);
+
+            long oldXR = xr;
+            
+            xr = xl ^ pL;
+
+            long postF = F(xr);
+            xl = postF ^ oldXR;
+
+        }
+
+        //round 17
+        long oldXL = xl;
+        xl = xr;
+        xr = oldXL;
+        xr = xr ^ Long.parseLong(p[1], 16);
+
+        // round 18
+        xl = xl ^ Long.parseLong(p[0], 16);
+   
+        String plainTextL = Long.toBinaryString(xl);
+        String plainTextR = Long.toBinaryString(xr);
+        String plainText = plainTextL.concat(plainTextR);
+
+        return plainText;
+    }
+
 }
